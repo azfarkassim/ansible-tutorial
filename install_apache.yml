@@ -1,0 +1,21 @@
+- name: Get Apache
+  hosts: all
+  become: yes
+  tasks:
+    - name: update yum package
+      yum:
+        name: '*'
+        update_cache: yes
+    - name: upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+    - name: install apache
+      yum:
+        name: httpd
+        state: latest
+    - name: enable apache
+      systemd:
+        name: httpd
+        state: started
+        enabled: yes
